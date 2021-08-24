@@ -8,29 +8,54 @@ export default function Auth(){
   const emailInputRef = useRef();
   const pswInputRef = useRef();
 
+  async function createUser(email, password){
+    const response = await fetch('/api/auth/signup',{
+      method: "POST",
+      body: JSON.stringify({email, password}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error( data.message || 'Something went wrong!');
+    }
+
+    return data
+  }
 
   async function authHandler(event){
     event.preventDefault();
 
 
     const email = emailInputRef.current.value;
-    const psw = pswInputRef.current.value;
+    const password = pswInputRef.current.value;
 
     if(isLogin){
-      console.log("LOGIN")
-      // const result = await signIn('credentials', { 
-      //   redirect: false,
-      //   email: email,
-      //   password: psw
-      // });
-    }else{
-      console.log("Register")
+      const result = await signIn('credentials', { 
+        redirect: false,
+        email: email,
+        password: password
+      });
+      if(!result.error){
 
+      }
+
+      console.log("Rs: ", result)
+    }else{
+      try{
+        const result = await createUser( email, password)
+        console.log(result)
+      }catch(error){
+        console.log(error)
+      }
     }
 
     
 
-    console.log("auth: ", email,psw)
+    console.log("auth: ", email,password)
   }
 
   function clickHandler(event){
@@ -56,10 +81,10 @@ export default function Auth(){
           />
         </div>
         <div className="field">
-          <label htmlFor="psw">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
-            id="psw"
+            id="password"
             required
             placeholder="*****"
             ref={pswInputRef}
