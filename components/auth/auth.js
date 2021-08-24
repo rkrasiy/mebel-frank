@@ -1,42 +1,74 @@
 import Input from "../ui/input/input"
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
+import { signIn } from 'next-auth/client'
 
-export default function Auth(props){
+
+export default function Auth(){
+  const [ isLogin, setIsLogin ] = useState(false)
   const emailInputRef = useRef();
   const pswInputRef = useRef();
-  const { submited, login } = props
 
 
-  function authHandler(event){
+  async function authHandler(event){
     event.preventDefault();
+
+
     const email = emailInputRef.current.value;
     const psw = pswInputRef.current.value;
+
+    if(isLogin){
+      console.log("LOGIN")
+      // const result = await signIn('credentials', { 
+      //   redirect: false,
+      //   email: email,
+      //   password: psw
+      // });
+    }else{
+      console.log("Register")
+
+    }
+
+    
+
     console.log("auth: ", email,psw)
   }
 
+  function clickHandler(event){
+    event.preventDefault();
+    const logg = isLogin
+    setIsLogin(!logg)
+  }
+
+  let title = isLogin ? "LogIn" : "SignIn"
+
   return (
-    <form onSubmit={authHandler}>
+    <Fragment>
+      <h1>{title}</h1>
+       <form onSubmit={authHandler}>
         <div className="field">
           <label htmlFor="email">Your Email</label>
           <input
             type="email"
             id="email"
             placeholder="Your email"
-            aria-label="Your email"
+            required
             ref={emailInputRef}
           />
         </div>
         <div className="field">
-          <label htmlFor="psw">Your Email</label>
+          <label htmlFor="psw">Password</label>
           <input
             type="password"
             id="psw"
+            required
             placeholder="*****"
-            aria-label="Your password"
             ref={pswInputRef}
           />
         </div>
         <button>Enter</button>
+        <button onClick={clickHandler}>{isLogin ? "SignIn": "LogIn"}</button>
       </form>
+    </Fragment>
+   
   )
 }
