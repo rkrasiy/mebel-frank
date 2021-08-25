@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { signOut, useSession } from "next-auth/client";
+import Menu from "./menu"
 
 export default function Layout(props){
   const [ session, loading ] = useSession();
@@ -12,13 +13,7 @@ export default function Layout(props){
     <Fragment>
       <header>
         <div>Logo</div>
-        <nav>
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-        </nav>
+        <Menu/>
         <div>
         {session && (<p>{session.user.email}</p>) }
         {session && (<button onClick={logoutHandler}>Log Out</button>)}
