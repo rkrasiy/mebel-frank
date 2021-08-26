@@ -14,3 +14,78 @@ a {
 * {
   box-sizing: border-box;
 }
+
+header > .wrapper,
+.modal-menu .wrapper,
+main > .wrapper,
+footer > .wrapper{
+  width: 100%;
+  max-width: 1350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#__next{
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: 100%;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+header > .wrapper,
+header .button-wrapper,
+nav > ul{
+  display: flex;
+  flex-direction: row;
+}
+header > .wrapper,
+header .button-wrapper{
+  justify-content: space-between;
+}
+header .button-wrapper > *:not(.modal-menu,button) {
+  margin-right: 2em;
+}
+
+button.menu-button {
+  border: none;
+  background: none;
+  outline: none;
+  width: 43px;
+  height: 30px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+.close-button-menu {display: flex;justify-content: flex-end;}
+button.menu-button span {
+  transition: all .2s ease-out;
+  display: block;
+  border: 1px solid #000;
+  width: 100%;
+}
+button.menu-button span:nth-child(2){
+  width: 75%;
+}
+button.menu-button span:nth-child(3){
+  width: 50%;
+}
+button.menu-button.active{justify-content: center;}
+button.menu-button.active span{width: 68%; position: absolute; transform-origin: center;}
+button.menu-button.active span:nth-child(1){transform: rotate(45deg);}
+button.menu-button.active span:nth-child(2){display: none;}
+button.menu-button.active span:nth-child(3){transform: rotate(-45deg);}
+nav > ul{padding: 0;margin: 0;list-style: none;}
+.modal-menu {
+  position: fixed;
+
+  background: #dadada;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

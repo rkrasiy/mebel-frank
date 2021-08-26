@@ -1,5 +1,6 @@
 import Auth from "../../components/auth/auth"
-import { Fragment } from "react"
+import { Fragment } from "react";
+import Head from "next/head";
 export default function Admin() {
   // const user = localStorage.user
   // console.log("USER:", user)
@@ -7,7 +8,10 @@ export default function Admin() {
 
   return (
     <Fragment>
-      <h1>Adminer</h1>
+      <Head>
+        <title>Адмінка</title>
+      </Head>
+      <h1>Адмінка</h1>
       <Auth />
     </Fragment>
   )
