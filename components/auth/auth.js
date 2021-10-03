@@ -1,87 +1,70 @@
-import Input from "../ui/input/input"
 import { Fragment, useRef, useState } from "react";
 import { signIn } from 'next-auth/client'
-
+import  Link from "next/link";
 
 export default function Auth(){
-  const [ isLogin, setIsLogin ] = useState(false)
-  const emailInputRef = useRef();
-  const pswInputRef = useRef();
-
-  async function createUser(email, password){
-    const response = await fetch('/api/auth/signup',{
-      method: "POST",
-      body: JSON.stringify({email, password}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const data = await response.json();
-
-    if(!response.ok){
-      throw new Error( data.message || 'Something went wrong!');
+  const adminer = {
+    title: "Web адміністратор",
+    button: "Вхід",
+    cancel: "Відмінити",
+    userName:{
+      placeholder: "Ім'я",
+      text: "Пошта"
+    },
+    password: "Пароль",
+    error: {
+      login: "Something went wrong!",
+      inputValue: "Ім'я або пароль невірний"
     }
-
-    return data
   }
+
+  const [ isLogin, setIsLogin ] = useState(false);
+  const [ errorText, setErrorText ] = useState();
+
+  let title = isLogin ? "Вхід в адмінку" : adminer.title
+
+  const userNameInputRef = useRef();
+  const pswInputRef = useRef();
 
   async function authHandler(event){
     event.preventDefault();
 
-
-    const email = emailInputRef.current.value;
+    const userName = userNameInputRef.current.value;
     const password = pswInputRef.current.value;
+    
+    const result = await signIn('credentials', { 
+      redirect: false,
+      userName: userName,
+      password: password
+    });
 
-    if(isLogin){
-      const result = await signIn('credentials', { 
-        redirect: false,
-        email: email,
-        password: password
-      });
-      if(!result.error){
-
-      }
-
-      console.log("Rs: ", result)
-    }else{
-      try{
-        const result = await createUser( email, password)
-        console.log(result)
-      }catch(error){
-        console.log(error)
-      }
+    if(!result.error){
+      console.log("result",result);
+      setIsLogin(true)
+      return
     }
 
-    
-
-    console.log("auth: ", email,password)
+    setErrorText(adminer.error.inputValue)
+    return 
   }
-
-  function clickHandler(event){
-    event.preventDefault();
-    const logg = isLogin
-    setIsLogin(!logg)
-  }
-
-  let title = isLogin ? "LogIn" : "SignIn"
 
   return (
     <Fragment>
       <h1>{title}</h1>
+       <p>{errorText}</p>
        <form onSubmit={authHandler}>
         <div className="field">
-          <label htmlFor="email">Your Email</label>
+          <label htmlFor="userName">{adminer.userName.text}</label>
           <input
-            type="email"
-            id="email"
-            placeholder="Your email"
+            type="text"
+            id="userName"
+            placeholder={adminer.userName.placeholder}
             required
-            ref={emailInputRef}
+            ref={userNameInputRef}
           />
         </div>
         <div className="field">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">{adminer.password}</label>
           <input
             type="password"
             id="password"
@@ -90,8 +73,8 @@ export default function Auth(){
             ref={pswInputRef}
           />
         </div>
-        <button>Enter</button>
-        <button onClick={clickHandler}>{isLogin ? "SignIn": "LogIn"}</button>
+        <button type="submit">{adminer.button}</button>
+        <Link href="/">{adminer.cancel}</Link>
       </form>
     </Fragment>
    

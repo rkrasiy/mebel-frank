@@ -1,0 +1,48 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  height: 26vmax;
+  justify-content: center;
+}
+
+.image {
+  position: absolute;
+  top: -62px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.image img{
+  width: 100%;
+  object-fit: cover;
+}
+
+.page-subtitle {
+  background-color: var(--color-1);
+  display: inline-block;
+  padding: 2px 5px;
+  color: #fff;
+  font-family: var(--bold);
+  margin: 0 0 1em;
+}
+.page-title {
+  margin: 0;
+  background: #fff;
+  display: inline-block;
+  color: var(--color-1);
+  padding: 5px;
+}
+.content{
+  width: 100%;
+  max-width: var(--width);
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  padding:0;
+}

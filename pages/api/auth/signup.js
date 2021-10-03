@@ -2,24 +2,34 @@ import { connectToDatabase } from "../../../lib/db";
 import { hashPassword } from "../../../lib/auth";
 
 export default async function handler(req, res){
+  const error = {
+    422: {
+      userExist: 'User exists already!',
+      emptyInput: 'Invalid input'
+    },
+    201: {
+      createUser: "Creates user!"
+    }
+  }
+
   if(req.method === 'POST'){
     const data = req.body;
-    const { email, password } = data;
+    const { userName, password } = data;
 
-    if(!email ||
-      !email.includes("@") ||
+    if(!userName ||
+      userName.trim().length < 3 ||
       !password || password.trim().length < 7 ){
-        res.status(422).json({message: 'Invalid input'});
+        res.status(422).json({ message: error['422'].emptyInput});
         return;
       }
-
+   
     const client = await connectToDatabase();
     const db = client.db();
 
-    const existUser = await db.collection('users').findOne({email: email})
+    const existUser = await db.collection('users').findOne({userName: userName})
 
     if(existUser){
-      res.status(422).json({message: "User exists already!"});
+      res.status(422).json({ message: error['422'].userExist});
       client.close()
       return;
     }
@@ -27,11 +37,11 @@ export default async function handler(req, res){
     const psw = await hashPassword(password) 
 
     const result  = await db.collection("users").insertOne({
-      email: email,
+      userName: userName,
       password: psw
     });
 
-    res.status(201).json({message: "Creates user!"})
+    res.status(201).json({message: error['201'].createUser})
     client.close()
   }
 }

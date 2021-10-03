@@ -1,0 +1,45 @@
+.sharedlinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.shlink > a{
+  background-size: 100%;
+  width: 1em;
+  height: 1em;
+  display: block;
+  font-size: 1.7em;
+  margin-left: 15px;
+}
+
+.facebook{
+  background-image: url(/assets/sharedlinks/facebook.svg);
+}
+.twitter{
+  background-image: url(/assets/sharedlinks/twitter.svg);
+}
+.youtube{
+  background-image: url(/assets/sharedlinks/youtube.svg);
+}
+.linkedin{
+  background-image: url(/assets/sharedlinks/linkedin.svg);
+}
+.instagram{
+  background-image: url(/assets/sharedlinks/instagram.svg);
+}
+
+.facebook:hover{
+  background-image: url(/assets/sharedlinks/facebook1.svg);
+}
+.twitter:hover{
+  background-image: url(/assets/sharedlinks/twitter1.svg);
+}
+.youtube:hover{
+  background-image: url(/assets/sharedlinks/youtube1.svg);
+}
+.linkedin:hover{
+  background-image: url(/assets/sharedlinks/linkedin1.svg);
+}
+.instagram:hover{
+  background-image: url(/assets/sharedlinks/instagram1.svg);
+}

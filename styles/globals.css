@@ -1,11 +1,25 @@
+@font-face {font-family: "MontserratBold"; src: url("/assets/fonts/Montserrat-Bold.ttf");}
+@font-face {font-family: "MontserratLight"; src: url("/assets/fonts/Montserrat-Light.ttf");}
+@font-face {font-family: "MontserratRegular"; src: url("/assets/fonts/Montserrat-Regular.ttf");}
+@font-face {font-family: "MontserratItalic"; src: url("/assets/fonts/Montserrat-Italic.ttf");}
+
+:root{
+  --color-1: #FF6060;
+  --width: 1160px;
+
+  --bold: 'MontserratBold', sans-serif;
+  --regular: 'MontserratRegular', sans-serif;
+  --italic: 'MontserratItalic', sans-serif;
+  --light: 'MontserratLight', sans-serif;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--regular);
 }
-
+body.open-menu{overflow: hidden;}
 a {
   color: inherit;
   text-decoration: none;
@@ -17,10 +31,10 @@ a {
 
 header > .wrapper,
 .modal-menu .wrapper,
-main > .wrapper,
+main > section,
 footer > .wrapper{
   width: 100%;
-  max-width: 1350px;
+  max-width: var(--width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -32,6 +46,7 @@ footer > .wrapper{
   grid-template-columns: 100%;
   justify-content: space-between;
   min-height: 100vh;
+  padding: 1em;
 }
 
 header > .wrapper,
@@ -40,14 +55,21 @@ nav > ul{
   display: flex;
   flex-direction: row;
 }
+header > .wrapper {
+  padding: 1em;
+  background-color: #fff;
+}
 header > .wrapper,
 header .button-wrapper{
   justify-content: space-between;
 }
-header .button-wrapper > *:not(.modal-menu,button) {
-  margin-right: 2em;
-}
 
+header .button-wrapper > *:not(nav){
+  font-family: var(--bold);
+  color: var(--color-1);
+  margin-right: 2em;
+  line-height: 30px;
+}
 button.menu-button {
   border: none;
   background: none;
@@ -65,27 +87,50 @@ button.menu-button {
 button.menu-button span {
   transition: all .2s ease-out;
   display: block;
-  border: 1px solid #000;
+  border: 1px solid var(--color-1);
   width: 100%;
 }
-button.menu-button span:nth-child(2){
-  width: 75%;
-}
-button.menu-button span:nth-child(3){
-  width: 50%;
-}
-button.menu-button.active{justify-content: center;}
+button.menu-button span:nth-child(2){width: 75%;}
+button.menu-button span:nth-child(3){ width: 50%;}
+
+button.menu-button.active {justify-content: center;z-index: 101;}
 button.menu-button.active span{width: 68%; position: absolute; transform-origin: center;}
 button.menu-button.active span:nth-child(1){transform: rotate(45deg);}
 button.menu-button.active span:nth-child(2){display: none;}
 button.menu-button.active span:nth-child(3){transform: rotate(-45deg);}
-nav > ul{padding: 0;margin: 0;list-style: none;}
+nav > ul,
+.wrapper > .field > ul{padding: 0;margin: 0;list-style: none;}
+
 .modal-menu {
   position: fixed;
-
-  background: #dadada;
+  background: #f6f6f6;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 }
+
+
+
+header .menu {
+  list-style: none;
+  padding: 0;
+}
+header .modal-menu .wrapper {
+  padding: 1em;
+  margin-top: 200px;
+  max-width: 768px;
+}
+header .menu li{
+  font-size: 1.5em;
+  cursor: pointer;
+}
+header .menu li.active{font-family: var(--bold);}
+header .menu li:hover{color: var(--color-1)}
+header #logotipo {z-index: 101;}
+header .modal-menu .wrapper {display: grid;}
+header .field-menu {grid-area: 1/1/1/1;}
+header .field-submenu {grid-area: 1/2/1/2;}
+header .field-sharelink{grid-area: 2/1/2/3; border-top: 1px solid #dadada;}
+header .field-sharelink {margin-top: 1em; padding: 2em 1em 1em}

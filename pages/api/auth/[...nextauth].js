@@ -14,7 +14,7 @@ export default NextAuth({
 
         const usersCollection = client.db().collection("users");
 
-        const user = await usersCollection.findOne({email: credentials.email})
+        const user = await usersCollection.findOne({userName: credentials.userName})
 
         if(!user){
           client.close();
@@ -24,13 +24,12 @@ export default NextAuth({
         const isValid = await verifyPassword(credentials.password, user.password);
 
         if(!isValid){
-          
           client.close();
           throw new Error ('Could not log you in!')
         }
         
         client.close();
-        return {email: user.email}
+        return {userName: user.userName}
 
       }
     })
