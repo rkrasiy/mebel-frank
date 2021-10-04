@@ -1,8 +1,10 @@
 import { Fragment, useRef, useState } from "react";
 import { signIn } from 'next-auth/client'
 import  Link from "next/link";
+import classes from "./auth.module.css";
 
-export default function Auth(){
+
+export default function Auth( props ){
   const adminer = {
     title: "Web адміністратор",
     button: "Вхід",
@@ -18,17 +20,17 @@ export default function Auth(){
     }
   }
 
-  const [ isLogin, setIsLogin ] = useState(false);
   const [ errorText, setErrorText ] = useState();
-
-  let title = isLogin ? "Вхід в адмінку" : adminer.title
-
+  const [ inputPasswordType, setInputPasswordType ] = useState("password")
   const userNameInputRef = useRef();
   const pswInputRef = useRef();
-
+  let btnShowPasswordClass = classes.password;
+  if(inputPasswordType == "text"){
+    btnShowPasswordClass = `${classes.password} ${classes.active}`
+  }
   async function authHandler(event){
     event.preventDefault();
-
+    setErrorText("");
     const userName = userNameInputRef.current.value;
     const password = pswInputRef.current.value;
     
@@ -38,22 +40,28 @@ export default function Auth(){
       password: password
     });
 
-    if(!result.error){
-      console.log("result",result);
-      setIsLogin(true)
+    if(result.error){
+      setErrorText(adminer.error.inputValue)
       return
+    }else{
+      props.loggedIn(userName)
     }
-
-    setErrorText(adminer.error.inputValue)
     return 
+  }
+
+  function showPassword(e){
+    e.preventDefault()
+    if(inputPasswordType == "password")
+      setInputPasswordType("text");
+    else
+      setInputPasswordType("password")
   }
 
   return (
     <Fragment>
-      <h1>{title}</h1>
        <p>{errorText}</p>
-       <form onSubmit={authHandler}>
-        <div className="field">
+       <form onSubmit={authHandler} className={classes.auth}>
+        <div className={classes.field}>
           <label htmlFor="userName">{adminer.userName.text}</label>
           <input
             type="text"
@@ -63,18 +71,24 @@ export default function Auth(){
             ref={userNameInputRef}
           />
         </div>
-        <div className="field">
+        <div className={classes.field}>
           <label htmlFor="password">{adminer.password}</label>
           <input
-            type="password"
+            type={inputPasswordType}
             id="password"
             required
             placeholder="*****"
             ref={pswInputRef}
           />
+          <button onClick={showPassword} className={btnShowPasswordClass}>
+          </button>
         </div>
-        <button type="submit">{adminer.button}</button>
-        <Link href="/">{adminer.cancel}</Link>
+        <div className={classes['field-buttons']}>
+          <button type="submit" className={`${classes.button} ${classes.login}`}>
+            <span>{adminer.button}</span>
+          </button>
+          <Link href="/"><a className={`${classes.button} ${classes.cancel}`}><span>{adminer.cancel}</span></a></Link>
+        </div>
       </form>
     </Fragment>
    

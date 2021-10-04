@@ -29,6 +29,7 @@ export default NextAuth({
         }
         
         client.close();
+
         return {userName: user.userName}
 
       }
