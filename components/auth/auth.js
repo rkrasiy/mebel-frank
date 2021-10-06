@@ -4,12 +4,12 @@ import  Link from "next/link";
 import classes from "./auth.module.css";
 
 
-export default function Auth( props ){
+export default function Auth(){
   const adminer = {
     title: "Web адміністратор",
     button: "Вхід",
     cancel: "Відмінити",
-    userName:{
+    userEmail:{
       placeholder: "Ім'я",
       text: "Пошта"
     },
@@ -21,30 +21,37 @@ export default function Auth( props ){
   }
 
   const [ errorText, setErrorText ] = useState();
-  const [ inputPasswordType, setInputPasswordType ] = useState("password")
-  const userNameInputRef = useRef();
+
+  const [ inputPasswordType, setInputPasswordType ] = useState("password");
+  
+  const [ buttonType, setButtonType ] = useState("submit");
+
+  const userEmailInputRef = useRef();
   const pswInputRef = useRef();
+  
   let btnShowPasswordClass = classes.password;
+  
   if(inputPasswordType == "text"){
     btnShowPasswordClass = `${classes.password} ${classes.active}`
   }
-  async function authHandler(event){
+
+  async function submitHandler(event){
     event.preventDefault();
     setErrorText("");
-    const userName = userNameInputRef.current.value;
+    setButtonType("button");
+
+    const userEmail = userEmailInputRef.current.value;
     const password = pswInputRef.current.value;
     
     const result = await signIn('credentials', { 
       redirect: false,
-      userName: userName,
+      email: userEmail,
       password: password
     });
 
     if(result.error){
+      setButtonType("submit");
       setErrorText(adminer.error.inputValue)
-      return
-    }else{
-      props.loggedIn(userName)
     }
     return 
   }
@@ -60,31 +67,41 @@ export default function Auth( props ){
   return (
     <Fragment>
        <p>{errorText}</p>
-       <form onSubmit={authHandler} className={classes.auth}>
+       <form onSubmit={submitHandler} className={classes.auth}>
         <div className={classes.field}>
-          <label htmlFor="userName">{adminer.userName.text}</label>
+          <label htmlFor="email">{adminer.userEmail.text}</label>
           <input
-            type="text"
-            id="userName"
-            placeholder={adminer.userName.placeholder}
+            type="email"
+            id="email"
+            name="email"
             required
-            ref={userNameInputRef}
+            autoComplete="current-email"
+            ref={userEmailInputRef}   
           />
         </div>
         <div className={classes.field}>
           <label htmlFor="password">{adminer.password}</label>
           <input
             type={inputPasswordType}
-            id="password"
+            id="psw"
             required
-            placeholder="*****"
+            name="password"
+            autoComplete="current-password"
+        
             ref={pswInputRef}
           />
-          <button onClick={showPassword} className={btnShowPasswordClass}>
+          <button 
+            onClick={showPassword} 
+            className={btnShowPasswordClass}
+            tabIndex="-1"
+            >
           </button>
         </div>
         <div className={classes['field-buttons']}>
-          <button type="submit" className={`${classes.button} ${classes.login}`}>
+          <button 
+            type={buttonType}
+            className={`${classes.button} ${classes.login}`}
+            >
             <span>{adminer.button}</span>
           </button>
           <Link href="/"><a className={`${classes.button} ${classes.cancel}`}><span>{adminer.cancel}</span></a></Link>

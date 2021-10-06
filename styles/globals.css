@@ -29,7 +29,7 @@ a {
   box-sizing: border-box;
 }
 
-header > .wrapper,
+header:not(.adminer) > .wrapper,
 .modal-menu .wrapper,
 main > section,
 footer > .wrapper{
@@ -57,6 +57,8 @@ nav > ul{
 }
 header > .wrapper {
   padding: 1em;
+}
+header:not(.adminer) > .wrapper{
   background-color: #fff;
 }
 header > .wrapper,
@@ -134,3 +136,11 @@ header .field-menu {grid-area: 1/1/1/1;}
 header .field-submenu {grid-area: 1/2/1/2;}
 header .field-sharelink{grid-area: 2/1/2/3; border-top: 1px solid #dadada;}
 header .field-sharelink {margin-top: 1em; padding: 2em 1em 1em}
+
+
+/*Adminer*/
+
+header.adminer {
+  margin: -1em -1em 0;
+  background-color: rgb(37, 37, 37);
+}

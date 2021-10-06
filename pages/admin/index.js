@@ -1,30 +1,32 @@
-import Auth from "../../components/auth/auth"
-import { Fragment, useState } from "react";
+import Auth from "../../components/auth/auth";
+import { signOut, useSession } from "next-auth/client";
+import { Fragment } from "react";
 import Head from "next/head";
+import Logotipo from "../../components/layout/logotipo";
 
 export default function Admin() {
-  const [ isLogin, setIsLogin ] = useState(false);
-  let user = "";
+  const [ session, loading ] = useSession();
 
-  if (typeof window !== 'undefined') {
-    user = localStorage.getItem('user');
-  }
-  
-
-  function loginHandler(user){
-    localStorage.setItem('user', user)
-    setIsLogin(true)
-    return
-  }
+  console.log("Loading: ", loading);
+  console.log("Session: ", session)
 
   return (
     <Fragment>
       <Head>
         <title>Адмінка</title>
       </Head>
-      <h1>Адмінка</h1>
-      { !isLogin && <Auth loggedIn={loginHandler} /> }
-      <p>A1toM0vl</p>
+      <header className="adminer">
+        <div className="wrapper">
+         <Logotipo />
+          {session && (<div className="button-wrapper">
+            <p>{session.user.email}</p>
+            <button onClick={()=>signOut()}>Log Out</button>
+          </div>)}
+        </div>
+      </header>       
+      <main>
+        { !session && <Auth /> }
+      </main>
     </Fragment>
   )
 }

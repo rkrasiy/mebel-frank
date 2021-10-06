@@ -13,7 +13,7 @@ export default function Menu ( props ){
     {href: "/", title: "Головна"}
   ]
   
-  function buttonHandler(event){
+  function closeOpenHandler(event){
     event.preventDefault();    
     if(!openMenu){
       document.body.className = "open-menu"
@@ -25,9 +25,10 @@ export default function Menu ( props ){
 
   function handleClick(e, path){
     e.preventDefault();
-    if(openMenu)
+    if(openMenu){
+      document.body.classList.remove("open-menu")
       setOpenMenu(false)
-    
+    }
     router.push(path)
   }
 
@@ -78,7 +79,7 @@ export default function Menu ( props ){
 
   return  (
     <nav>
-      <MenuButton clicked={buttonHandler} className={btnClasses}/>
+      <MenuButton clicked={closeOpenHandler} className={btnClasses}/>
       {content}
     </nav>
   )

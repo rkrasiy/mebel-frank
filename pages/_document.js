@@ -9,7 +9,6 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
-          <div id="overlay" />
           <Main />
           <NextScript />
         </body>

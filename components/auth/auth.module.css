@@ -2,9 +2,12 @@
   padding: 1em;
   border: 1px solid;
   box-shadow: 1px 0 9px rgb(0 0 0 / 30%);
+  max-width: 400px;
+  margin: 0 auto;
 }
 .field{
   position: relative;
+  margin-bottom: 1em;
 }
 .password{
   display: block;
