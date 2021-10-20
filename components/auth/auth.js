@@ -1,5 +1,6 @@
-import { Fragment, useRef, useState } from "react";
-import { signIn } from 'next-auth/client'
+import { useRef, useState } from "react";
+import { signIn } from 'next-auth/client';
+import { useRouter } from "next/router";
 import  Link from "next/link";
 import classes from "./auth.module.css";
 
@@ -25,7 +26,7 @@ export default function Auth(){
   const [ inputPasswordType, setInputPasswordType ] = useState("password");
   
   const [ buttonType, setButtonType ] = useState("submit");
-
+  const router = useRouter();
   const userEmailInputRef = useRef();
   const pswInputRef = useRef();
   
@@ -53,7 +54,10 @@ export default function Auth(){
       setButtonType("submit");
       setErrorText(adminer.error.inputValue)
     }
-    return 
+
+    if(!result.error) {
+      router.replace("/admin/dashboard")
+    }
   }
 
   function showPassword(e){
@@ -65,49 +69,51 @@ export default function Auth(){
   }
 
   return (
-    <Fragment>
-       <p>{errorText}</p>
-       <form onSubmit={submitHandler} className={classes.auth}>
-        <div className={classes.field}>
-          <label htmlFor="email">{adminer.userEmail.text}</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            autoComplete="current-email"
-            ref={userEmailInputRef}   
-          />
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="password">{adminer.password}</label>
-          <input
-            type={inputPasswordType}
-            id="psw"
-            required
-            name="password"
-            autoComplete="current-password"
-        
-            ref={pswInputRef}
-          />
-          <button 
-            onClick={showPassword} 
-            className={btnShowPasswordClass}
-            tabIndex="-1"
-            >
-          </button>
-        </div>
-        <div className={classes['field-buttons']}>
-          <button 
-            type={buttonType}
-            className={`${classes.button} ${classes.login}`}
-            >
-            <span>{adminer.button}</span>
-          </button>
-          <Link href="/"><a className={`${classes.button} ${classes.cancel}`}><span>{adminer.cancel}</span></a></Link>
-        </div>
-      </form>
-    </Fragment>
+    <div className="auth">
+       <div className="wrapper">
+        <p>{errorText}</p>
+        <form onSubmit={submitHandler} className={classes.auth}>
+          <div className={classes.field}>
+            <label htmlFor="email">{adminer.userEmail.text}</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autoComplete="current-email"
+              ref={userEmailInputRef}   
+            />
+          </div>
+          <div className={classes.field}>
+            <label htmlFor="password">{adminer.password}</label>
+            <input
+              type={inputPasswordType}
+              id="psw"
+              required
+              name="password"
+              autoComplete="current-password"
+          
+              ref={pswInputRef}
+            />
+            <button 
+              onClick={showPassword} 
+              className={btnShowPasswordClass}
+              tabIndex="-1"
+              >
+            </button>
+          </div>
+          <div className={classes['field-buttons']}>
+            <button 
+              type={buttonType}
+              className={`${classes.button} ${classes.login}`}
+              >
+              <span>{adminer.button}</span>
+            </button>
+            <Link href="/"><a className={`${classes.button} ${classes.cancel}`}><span>{adminer.cancel}</span></a></Link>
+          </div>
+        </form>
+       </div>
+    </div>
    
   )
 }

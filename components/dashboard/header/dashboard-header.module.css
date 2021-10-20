@@ -1,0 +1,19 @@
+.header{
+  background-color: brown;
+}
+.wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons > *{
+  border: 1px solid;
+  padding: 8px 10px;
+  font-size: 1em;
+}

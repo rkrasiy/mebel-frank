@@ -1,13 +1,17 @@
 .auth{
   padding: 1em;
-  border: 1px solid;
-  box-shadow: 1px 0 9px rgb(0 0 0 / 30%);
+  border: 1px solid rgb(0 0 0 / 15%);
+  box-shadow: 1px 0 9px rgb(0 0 0 / 15%);
   max-width: 400px;
-  margin: 0 auto;
+  border-radius: 5px;
 }
 .field{
   position: relative;
   margin-bottom: 1em;
+}
+.field label{
+  margin-bottom: .5em;
+  display: block;
 }
 .password{
   display: block;
@@ -22,9 +26,9 @@
   border-radius: 5px;
   position: absolute;
   right: 1px;
-  height: 28px;
+  height: 39px;
   bottom: 1px;
-  border-left: 1px solid #000;
+  border-left: 1px solid rgb(0 0 0 / 15%);
   padding: 2px;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
@@ -33,16 +37,18 @@
   background-image: url(/assets/icons/eye-open.svg);
 }
 .auth input {
-  padding: 5px 8px;
+  padding: 8px 12px;
   border-radius: 5px;
-  border: 1px solid #000;
-  font-size: 1em;
+  border: 1px solid rgb(0 0 0 / 15%);
+  font-size: 20px;
   width: 100%;
+
 }
 .auth input:focus{
   border-width: 1px;
   outline: none;
 }
+
 .button span{
   font-family: var(--bold);
   letter-spacing: 1px;

@@ -4,21 +4,10 @@
   position: relative;
   box-sizing: border-box;
   height: 26vmax;
-  justify-content: center;
-}
-
-.image {
-  position: absolute;
-  top: -62px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  overflow: hidden;
-}
-.image img{
-  width: 100%;
-  object-fit: cover;
+  justify-content: flex-end;
+  background-size: cover;
+  padding-bottom: 1em;
+  margin: 1em 1em 0;
 }
 
 .page-subtitle {

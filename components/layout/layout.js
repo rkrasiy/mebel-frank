@@ -1,40 +1,24 @@
-import { Fragment } from "react";
-import  { useRouter } from "next/router";
 
-import Menu from "./menu";
-import Link from "next/link";
-import Logotipo from "./logotipo";
+import { useRouter } from "next/router";
+import Footer from "./footer";
+import Header from "./header";
 
-export default function Layout(props){
+export default function Layout(props) {
   const router = useRouter();
-console.log("Layout")
-  if(router.pathname === "/admin"){
-    return <Fragment>
+
+  if (router.pathname.indexOf("/admin") !== -1) {
+    return <>
       {props.children}
-    </Fragment>
-  }else{
+    </>
+  } else {
     return (
-      <Fragment>
-        <header>
-          <div className="wrapper">
-            <Logotipo />
-            <div className="button-wrapper">
-              <Link href="#">Зв'язатись</Link>
-              <Link href="#">Галерея</Link>
-              <Menu />
-            </div>
-          </div>
-        </header>
+      <>
+        <Header className="fixed" />
         <main>
-            {props.children}
+          {props.children}
         </main>
-        <footer>
-          <div className="wrapper">
-            Footer
-            <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-          </div>
-        </footer>
-      </Fragment>
+        <Footer />
+      </>
     )
   }
 }

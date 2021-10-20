@@ -1,0 +1,18 @@
+.menu{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu li{
+  padding: 1em;
+  border: 1px solid #fff;
+  margin-right: -1px;
+  border-right-color: rgb(213 213 213);
+  border-radius: 2px;
+}
+.active{
+  border-color: rgb(213 213 213)!important;
+  border-right-color: #fff!important;
+}
